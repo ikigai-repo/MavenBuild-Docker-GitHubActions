@@ -1,7 +1,7 @@
 name: CI workflow for MAVEN 
 on: push
 env: 
-  imagename: "myjavaapp"
+ imagename: "myjavaapp"
 jobs: 
  CICDjob: 
   runs-on: ubuntu-latest
@@ -9,7 +9,7 @@ jobs:
    - name: clone the repo on the runner
      uses: actions/checkout@v4
    - name: Setup java and MAVEN
-     uses: actions/setup-java@v4
+     uses: actions/setip-java@v4
      with: 
       distribution: 'temurin'
       java-version: 17
@@ -29,7 +29,11 @@ jobs:
       context: .
       push: true
       tags: ${{secrets.DOCKERHUB_USERNAME}}/${{env.imagename}}:latest
-   - name: deploy the image
-     run: |
-      docker run -d -P ${{secrets.DOCKERHUB_USERNAME}}/${{env.imagename}}:latest
-      docker ps -a 
+ DeployJob:
+   needs: CICDjob
+   runs-on: self-hosted
+   steps:   
+    - name: deploy the image
+      run: |
+       docker run -d -P ${{secrets.DOCKERHUB_USERNAME}}/${{env.imagename}}:latest
+       docker ps -a 
