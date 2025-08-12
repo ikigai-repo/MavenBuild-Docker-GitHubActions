@@ -1,9 +1,9 @@
 name: CI workflow for MAVEN 
 on: push
+env: 
+  imagename: "myjavaapp"
 jobs: 
  CICDjob: 
-  env: 
-    imagename: "myjavaapp"
   runs-on: ubuntu-latest
   steps: 
    - name: clone the repo on the runner
