@@ -1,4 +1,4 @@
-name: CI workflow for MAVEN 
+name: CI workflow MAVEN 
 on: push
 jobs: 
  CICDjob: 
